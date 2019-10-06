@@ -130,6 +130,7 @@ License: You must have a valid license purchased only from themeforest(the above
         <!-- END THEME GLOBAL SCRIPTS -->
         <!-- BEGIN PAGE LEVEL SCRIPTS -->
         <script src="{{ asset('assets/pages/scripts/dashboard.min.js') }}" type="text/javascript"></script>
+        {{-- <script src="{{ asset('assets/pages/scripts/charts-amcharts.min.js') }}" type="text/javascript"></script> --}}
         {{-- <script src="{{ asset('assets/apps/scripts/calendar.min.js') }}" type="text/javascript"></script> --}}
         <!-- END PAGE LEVEL SCRIPTS -->
         <script src="{{ asset('assets/pages/scripts/profile.min.js') }}" type="text/javascript"></script>

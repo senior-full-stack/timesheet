@@ -23,12 +23,13 @@ class AccountingController extends Controller
         $project_id=$request->get('project_id');
         
         $result_datas=Timesheet::join('projects', 'timesheets.project_id', '=', 'projects.project_id')
+            ->join('users', 'timesheets.user_id', '=', 'users.id')
             ->join('phases', 'timesheets.phase_id', '=', 'phases.phase_id')
             ->join('disciplines', 'timesheets.discipline_id', '=', 'disciplines.discipline_id')
             ->join('resources', 'timesheets.resource_id', '=', 'resources.resource_id')
             ->where(['timesheets.project_id'=>$project_id])
-            ->select('projects.project_name','projects.project_number','projects.project_rate','projects.project_actual_rate','phases.phase_name','disciplines.discipline_type','resources.resource_type','projects.clientid','timesheets.task_contract_amount','projects.contractamount','projects.authorizedbudget','timesheets.id',DB::raw('sum(total_time) as sum'))
-            ->groupby(['projects.project_name','projects.project_number','projects.project_rate','projects.project_actual_rate','phases.phase_name','disciplines.discipline_type','resources.resource_type','projects.clientid','timesheets.task_contract_amount','projects.contractamount','projects.authorizedbudget','timesheets.id'])
+            ->select('projects.project_name','projects.project_number','users.rates','projects.project_actual_rate','phases.phase_name','disciplines.discipline_type','resources.resource_type','projects.clientid','timesheets.task_contract_amount','projects.contractamount','projects.authorizedbudget','timesheets.id',DB::raw('sum(total_time) as sum'))
+            ->groupby(['projects.project_name','projects.project_number','users.rates','projects.project_actual_rate','phases.phase_name','disciplines.discipline_type','resources.resource_type','projects.clientid','timesheets.task_contract_amount','projects.contractamount','projects.authorizedbudget','timesheets.id'])
             ->get();
         $clients=Client::get();
         return ['content' => (string)view('admin.accounting.project_budget_content')->with(compact('result_datas','clients'))]; 
@@ -74,10 +75,11 @@ class AccountingController extends Controller
         if($project_id=="all"){
             $result_datas=Timesheet::join('projects', 'timesheets.project_id', '=', 'projects.project_id')
                 ->join('phases', 'timesheets.phase_id', '=', 'phases.phase_id')
+                ->join('users', 'timesheets.user_id', '=', 'users.id')
                 ->join('disciplines', 'timesheets.discipline_id', '=', 'disciplines.discipline_id')
                 ->join('resources', 'timesheets.resource_id', '=', 'resources.resource_id')
-                ->select('projects.project_name','projects.project_number','projects.project_rate','projects.project_actual_rate','phases.phase_name','disciplines.discipline_type','resources.resource_type','projects.clientid','timesheets.task_contract_amount','projects.contractamount','projects.authorizedbudget','timesheets.id',DB::raw('sum(total_time) as sum'))
-                ->groupby(['projects.project_name','projects.project_number','projects.project_rate','projects.project_actual_rate','phases.phase_name','disciplines.discipline_type','resources.resource_type','projects.clientid','timesheets.task_contract_amount','projects.contractamount','projects.authorizedbudget','timesheets.id'])
+                ->select('projects.project_name','projects.project_number','users.rates','projects.project_actual_rate','phases.phase_name','disciplines.discipline_type','resources.resource_type','projects.clientid','timesheets.task_contract_amount','projects.contractamount','projects.authorizedbudget','timesheets.id',DB::raw('sum(total_time) as sum'))
+                ->groupby(['projects.project_name','projects.project_number','users.rates','projects.project_actual_rate','phases.phase_name','disciplines.discipline_type','resources.resource_type','projects.clientid','timesheets.task_contract_amount','projects.contractamount','projects.authorizedbudget','timesheets.id'])
                 ->get();
 
             $clients=Client::get();
@@ -85,12 +87,13 @@ class AccountingController extends Controller
             return ['content' => (string)view('accounting.project_budget_viewAll')->with(compact('result_datas','clients'))]; 
         }else{
             $result_datas=Timesheet::join('projects', 'timesheets.project_id', '=', 'projects.project_id')
+                ->join('users', 'timesheets.user_id', '=', 'users.id')
                 ->join('phases', 'timesheets.phase_id', '=', 'phases.phase_id')
                 ->join('disciplines', 'timesheets.discipline_id', '=', 'disciplines.discipline_id')
                 ->join('resources', 'timesheets.resource_id', '=', 'resources.resource_id')
                 ->where(['timesheets.project_id'=>$project_id])
-                ->select('projects.project_name','projects.project_number','projects.project_rate','projects.project_actual_rate','phases.phase_name','disciplines.discipline_type','resources.resource_type','projects.clientid','timesheets.task_contract_amount','projects.contractamount','projects.authorizedbudget','timesheets.id',DB::raw('sum(total_time) as sum'))
-                ->groupby(['projects.project_name','projects.project_number','projects.project_rate','projects.project_actual_rate','phases.phase_name','disciplines.discipline_type','resources.resource_type','projects.clientid','timesheets.task_contract_amount','projects.contractamount','projects.authorizedbudget','timesheets.id'])
+                ->select('projects.project_name','projects.project_number','users.rates','projects.project_actual_rate','phases.phase_name','disciplines.discipline_type','resources.resource_type','projects.clientid','timesheets.task_contract_amount','projects.contractamount','projects.authorizedbudget','timesheets.id',DB::raw('sum(total_time) as sum'))
+                ->groupby(['projects.project_name','projects.project_number','users.rates','projects.project_actual_rate','phases.phase_name','disciplines.discipline_type','resources.resource_type','projects.clientid','timesheets.task_contract_amount','projects.contractamount','projects.authorizedbudget','timesheets.id'])
                 ->get();
             
             $clients=Client::get();

@@ -29,7 +29,7 @@
             @if(count($result_datas)>0)
                 @foreach($result_datas as $result_data)
                     @php 
-                        $total_exhaustion+=$result_data->sum * $result_data->project_rate;
+                        $total_exhaustion+=$result_data->sum * $result_data->rates;
                         $total_task_contract_amount+=$result_data->task_contract_amount;
 
                         $project_number=$result_data->project_number;
@@ -52,7 +52,7 @@
                         $total_sum_col[3]=$result_data->contractamount-$result_data->authorizedbudget;
                         $total_sum_col[4]=$result_data->authorizedbudget*0.9;
                         $total_sum_col[5]+=$task_budget;
-                        $total_sum_col[6]+=$result_data->sum * $result_data->project_rate;
+                        $total_sum_col[6]+=$result_data->sum * $result_data->rates;
 
                         $project_number=$result_data->project_number;
                     @endphp
@@ -80,11 +80,11 @@
                             <td rowspan="{{ count($result_datas) }}" class="center">{{ $result_data->authorizedbudget*0.9 }}</td>
                         @endif
                         <td class="center">{{ $task_budget }}</td>
-                        <td class="center">{{ $result_data->sum * $result_data->project_rate }}</td>
+                        <td class="center">{{ $result_data->sum * $result_data->rates }}</td>
                         @if($project_number!=$pre_project_number)
                             <td rowspan="{{ count($result_datas) }}" class="center">{{ $percentofconstract }}</td>
                         @endif
-                        {{-- <td class="center">{{ ($result_data->task_contract_amount) ? round(($result_data->sum * $result_data->project_rate)/$result_data->task_contract_amount*100,2) : 0 }}</td> --}}
+                        {{-- <td class="center">{{ ($result_data->task_contract_amount) ? round(($result_data->sum * $result_data->rates)/$result_data->task_contract_amount*100,2) : 0 }}</td> --}}
                     </tr>
                     <input type='hidden' name='timesheet_id[]' value='{{ $result_data->id }}' />
                     @php

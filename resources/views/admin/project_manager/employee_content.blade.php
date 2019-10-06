@@ -31,9 +31,9 @@
             @if(count($result_datas)>0)
                 @foreach($result_datas as $result_data)
                     @php 
-                        $total_budget+=$result_data->sum*$result_data->project_rate;
+                        $total_budget+=$result_data->sum*$result_data->rates;
                         $total_sum=0;
-                        $total_rates+=(double)$result_data->project_rate;
+                        $total_rates+=(double)$result_data->rates;
                     @endphp
                     <tr>
                         <td class="center">{{ $result_data->project_name }}</td>
@@ -49,8 +49,8 @@
                             @endif
                         @endfor
                         <td class="center">{{ $total_sum }}</td>
-                        <td class="center">{{ $result_data->project_rate }}</td>
-                        <td class="center">{{ $total_sum*$result_data->project_rate }}</td>
+                        <td class="center">{{ $result_data->rates }}</td>
+                        <td class="center">{{ $total_sum*$result_data->rates }}</td>
                     </tr>
                 @endforeach
                 @php 

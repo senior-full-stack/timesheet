@@ -28,8 +28,8 @@ class ProjectManagerController extends Controller
         $result_datas=Timesheet::join('projects', 'timesheets.project_id', '=', 'projects.project_id')
             ->join('users', 'timesheets.user_id', '=', 'users.id')
             ->where(['timesheets.user_id'=>$employee_id])
-            ->select('projects.project_name','timesheets.month_val','projects.project_rate',DB::raw('sum(total_time) as sum'))
-            ->groupby(['timesheets.month_val','projects.project_name','projects.project_rate'])
+            ->select('projects.project_name','timesheets.month_val','users.rates',DB::raw('sum(total_time) as sum'))
+            ->groupby(['timesheets.month_val','projects.project_name','users.rates'])
             ->get();
         
         return ['content' => (string)view('admin.project_manager.employee_content')->with(compact('result_datas'))]; 
@@ -45,8 +45,8 @@ class ProjectManagerController extends Controller
         $result_datas=Timesheet::join('projects', 'timesheets.project_id', '=', 'projects.project_id')
             ->join('users', 'timesheets.user_id', '=', 'users.id')
             ->where(['timesheets.user_id'=>$employee_id])
-            ->select('projects.project_name','timesheets.month_val','projects.project_rate',DB::raw('sum(total_time) as sum'))
-            ->groupby(['timesheets.month_val','projects.project_name','projects.project_rate'])
+            ->select('projects.project_name','timesheets.month_val','users.rates',DB::raw('sum(total_time) as sum'))
+            ->groupby(['timesheets.month_val','projects.project_name','users.rates'])
             ->get();
         
         return ['content' => (string)view('project_manager.employee_content')->with(compact('result_datas'))]; 
@@ -62,8 +62,8 @@ class ProjectManagerController extends Controller
         $result_datas=Timesheet::join('projects', 'timesheets.project_id', '=', 'projects.project_id')
             ->join('users', 'timesheets.user_id', '=', 'users.id')
             ->where(['timesheets.project_id'=>$project_id])
-            ->select('users.fullname','timesheets.month_val','projects.project_rate as rates',DB::raw('sum(total_time) as sum'))
-            ->groupby(['timesheets.month_val','users.fullname','projects.project_rate'])
+            ->select('users.fullname','timesheets.month_val','users.rates as rates',DB::raw('sum(total_time) as sum'))
+            ->groupby(['timesheets.month_val','users.fullname','users.rates'])
             ->get();
         
         return ['content' => (string)view('admin.project_manager.project_content')->with(compact('result_datas'))]; 
@@ -78,8 +78,8 @@ class ProjectManagerController extends Controller
         $result_datas=Timesheet::join('projects', 'timesheets.project_id', '=', 'projects.project_id')
             ->join('users', 'timesheets.user_id', '=', 'users.id')
             ->where(['timesheets.project_id'=>$project_id])
-            ->select('users.fullname','timesheets.month_val','projects.project_rate as rates',DB::raw('sum(total_time) as sum'))
-            ->groupby(['timesheets.month_val','users.fullname','projects.project_rate'])
+            ->select('users.fullname','timesheets.month_val','users.rates as rates',DB::raw('sum(total_time) as sum'))
+            ->groupby(['timesheets.month_val','users.fullname','users.rates'])
             ->get();
         
         return ['content' => (string)view('project_manager.project_content')->with(compact('result_datas'))]; 
